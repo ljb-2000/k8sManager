@@ -23,8 +23,6 @@ func (this *BaseController) Prepare() {
 	this.actionName = actionName
 	path := this.controllerName + "." + this.actionName
 
-	this.GetSession()
-
 	//判断是否是不需要登录验证
 	logs.Debug("判断是否是不需要登录验证 path :", path)
 	if this.isOpenPerm() {
