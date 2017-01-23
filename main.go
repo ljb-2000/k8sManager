@@ -1,7 +1,7 @@
 package main
 
 import (
-	_ "github.com/k8sManager/routers"
+	_ "github.com/tonychenl/k8sManager/routers"
 	"github.com/astaxie/beego"
 )
 

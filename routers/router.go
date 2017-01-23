@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"github.com/k8sManager/controllers"
+	"github.com/tonychenl/k8sManager/controllers"
 	"github.com/astaxie/beego"
 )
 

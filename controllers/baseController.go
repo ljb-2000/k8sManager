@@ -2,11 +2,12 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/logs"
 	"strings"
 )
 
 var openPerm = map[string]string{
-	"MainController": "xxx",
+	"MainController": "*",
 }
 
 type BaseController struct {
@@ -20,11 +21,22 @@ func (this *BaseController) Prepare() {
 	controllerName, actionName := this.GetControllerAndAction()
 	this.controllerName = controllerName
 	this.actionName = actionName
+	path := this.controllerName + "." + this.actionName
+
+	this.GetSession()
 
 	//判断是否是不需要登录验证
+	logs.Debug("判断是否是不需要登录验证 path :", path)
 	if this.isOpenPerm() {
+		logs.Info("不需要验证登录 path :", path)
 		return //不需要验证登录
 	}
+	//登录校验
+	logs.Debug("登录校验 path :", path)
+
+
+	//操作权限校验
+	logs.Debug("操作权限校验 path :", path)
 }
 
 

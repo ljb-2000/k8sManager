@@ -176,7 +176,7 @@
         <root url="file://C:/Go/src/database" />
         <root url="file://C:/Go/src/vendor" />
         <root url="file://C:/Go/src/debug" />
-        <root url="file://$PROJECT_DIR$/.." />
+        <root url="file://$PROJECT_DIR$/../.." />
         <root url="file://C:/Go/src/os" />
         <root url="file://C:/Go/src/golang.org" />
         <root url="file://C:/Go/src/go" />
@@ -192,7 +192,7 @@
         <root url="file://C:/Go/src/reflect" />
         <root url="file://C:/Go/src/text" />
         <root url="file://C:/Go/src/html" />
-        <root url="file://$PROJECT_DIR$/../../k8s.io" />
+        <root url="file://$PROJECT_DIR$/../../../k8s.io" />
         <root url="file://C:/Go/src/net" />
         <root url="file://C:/Go/src/image" />
       </CLASSES>
@@ -225,7 +225,7 @@
         <root url="file://C:/Go/src/database" />
         <root url="file://C:/Go/src/vendor" />
         <root url="file://C:/Go/src/debug" />
-        <root url="file://$PROJECT_DIR$/.." />
+        <root url="file://$PROJECT_DIR$/../.." />
         <root url="file://C:/Go/src/os" />
         <root url="file://C:/Go/src/golang.org" />
         <root url="file://C:/Go/src/go" />
@@ -241,7 +241,7 @@
         <root url="file://C:/Go/src/reflect" />
         <root url="file://C:/Go/src/text" />
         <root url="file://C:/Go/src/html" />
-        <root url="file://$PROJECT_DIR$/../../k8s.io" />
+        <root url="file://$PROJECT_DIR$/../../../k8s.io" />
         <root url="file://C:/Go/src/net" />
         <root url="file://C:/Go/src/image" />
       </SOURCES>
