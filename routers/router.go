@@ -7,4 +7,5 @@ import (
 
 func init() {
 	beego.Router("/", &controllers.MainController{}, "get:Index")
+	beego.AutoRouter(&controllers.LoginController{})
 }

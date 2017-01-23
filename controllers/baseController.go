@@ -4,10 +4,11 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
 	"strings"
+	"github.com/tonychenl/k8sManager/common"
 )
 
 var openPerm = map[string]string{
-	"MainController": "*",
+	"LoginController":"*",
 }
 
 type BaseController struct {
@@ -31,7 +32,12 @@ func (this *BaseController) Prepare() {
 	}
 	//登录校验
 	logs.Debug("登录校验 path :", path)
-
+	var user interface{}
+	user = this.GetSession(common.SESSION_LOGIN_USER)
+	if user == nil {
+		//未登录
+		this.Redirect(beego.URLFor("LoginController.Tologin"), 302)
+	}
 
 	//操作权限校验
 	logs.Debug("操作权限校验 path :", path)
