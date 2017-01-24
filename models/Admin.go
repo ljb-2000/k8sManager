@@ -21,3 +21,17 @@ type Role struct {
 func (Role)TableName() string {
 	return "sys_role"
 }
+
+type Menu struct {
+	ParentId  int64
+	ParentIds string
+	Name      string
+	Sort      int
+	Handler   string
+	Icon      string
+	IsShow    bool
+}
+
+func (Menu)TableName() string {
+	return "sys_menu"
+}
