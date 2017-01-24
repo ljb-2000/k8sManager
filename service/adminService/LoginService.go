@@ -9,8 +9,8 @@ import (
 )
 
 func Login(loginName, password string) (*models.Admin, error) {
-	admin := dao.LoginAdmin(loginName, common.Md5(password))
-	if admin == nil {
+	admin, err := dao.LoginAdmin(loginName, common.Md5(password))
+	if err != nil {
 		logs.Info("登录失败:用户名密码错误")
 		return nil, errors.New("用户名密码错误")
 	} else {
