@@ -60,7 +60,6 @@ var Datatable = function() {
 		                    "first": "首页"
 		                }
                     },
-                    "pagingType": "bootstrap_full_number", // pagination type(bootstrap, bootstrap_full_number or bootstrap_extended)
                     "processing": false, // enable/disable display message box on record load
                     "serverSide": true, // enable/disable server side ajax loading
 

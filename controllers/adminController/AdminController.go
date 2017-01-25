@@ -17,7 +17,7 @@ func (this *AdminController)List() {
 		if err == nil {
 			logs.Debug(page)
 		}
-		this.Data["data"] = page
+		this.Data["json"] = page
 		this.ServeJSON()
 	} else {
 		this.TplName = "admin/admin_list.html"
