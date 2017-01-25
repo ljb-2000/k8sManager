@@ -8,11 +8,11 @@ type Page struct {
 	List       interface{}
 }
 
-func (this *Page) getStart() int {
-	if (this.PageNo == 1) {
+func (this *Page) GetStart() int {
+	if this.PageNo == 1 {
 		return 0
 	} else {
-		return this.PageNo * this.PageSize - 1;
+		return (this.PageNo - 1) * this.PageSize - 1;
 	}
 }
 

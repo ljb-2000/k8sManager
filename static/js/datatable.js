@@ -8,7 +8,7 @@ var Datatable = function() {
     var table; // actual table jquery object
     var tableContainer; // actual table container object
     var tableWrapper; // actual table wrapper jquery object
-    var el = $(".page-container > .page-content-wrapper > .page-content");
+    var el = $(".wrapper > .content-wrapper > .content");
     var tableInitialized = false;
     var ajaxParams = {}; // set filter mode
     var the;
@@ -76,18 +76,18 @@ var Datatable = function() {
                             data['limit']=data.length;
                             var  page = (data.start/data.length)>=1?(data.start/data.length)+1:1;
                             data['page']=page;
-                            Metronic.blockUI({
+                            /*Metronic.blockUI({
                                 message: tableOptions.loadingMessage,
                                 target: tableContainer,
                                 overlayColor: 'none',
                                 cenrerY: true,
                                 boxed: true
-                            });
+                             });*/
                         },
                         "dataSrc": function(res) { // Manipulate the data returned from the server
                     		if(!res.items || !res){
                         		showToast('载入数据出错','', 'error');
-                        		Metronic.unblockUI(tableContainer);
+                                //Metronic.unblockUI(tableContainer);
                         		return [];
                         	}                        	
                             if ($('.group-checkable', table).size() === 1) {
@@ -98,8 +98,8 @@ var Datatable = function() {
                             if (tableOptions.onSuccess) {
                                 tableOptions.onSuccess.call(undefined, the);
                             }
-                            Metronic.unblockUI(tableContainer);
-                            
+                            //Metronic.unblockUI(tableContainer);
+
                            res.recordsTotal=res.totalCount;
                            res.recordsFiltered=res.totalCount;
                            res.length=res.limit;
@@ -115,7 +115,7 @@ var Datatable = function() {
                         	}else{
                         		dataTable.ajax.url(ajaxUrl);
                         	}
-                        	Metronic.unblockUI(tableContainer);
+                            //Metronic.unblockUI(tableContainer);
                         }
                     },
 
@@ -124,7 +124,7 @@ var Datatable = function() {
                             tableInitialized = true; // set table initialized
                             table.show(); // display table
                         }
-                        Metronic.initUniform($('input[type="checkbox"]', table)); // reinitialize uniform checkboxes on each table reload
+                        // Metronic.initUniform($('input[type="checkbox"]', table)); // reinitialize uniform checkboxes on each table reload
                         countSelectedRecords(); // reset selected records indicator
 
                         // callback for ajax data load
@@ -144,7 +144,7 @@ var Datatable = function() {
 
             // create table's jquery object
             table = $(options.src);
-            tableContainer = $(".page-container > .page-content-wrapper > .page-content");//table.parents(".table-container");
+            tableContainer = $(".wrapper > .content-wrapper > .content");//table.parents(".table-container");
 
             // apply the special class that used to restyle the default datatable
             var tmp = $.fn.dataTableExt.oStdClasses;

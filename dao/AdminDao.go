@@ -4,7 +4,16 @@ import (
 	"github.com/tonychenl/k8sManager/models"
 	"github.com/jinzhu/gorm"
 	"github.com/astaxie/beego/logs"
+	"github.com/tonychenl/k8sManager/common"
 )
+
+func QueryAdmins(name string, page *common.Page) (*common.Page, error) {
+	admins := []models.Admin{}
+	var count int
+	err := db.Limit(page.PageSize).Offset(page.GetStart()).Preload("Role").Where("delete_time is null").Find(&admins).Error
+	db.Model(&models.Admin{}).Where("delete_time is null").Count(&count)
+	return common.NewPage(count, page.PageNo, page.PageSize, admins), err
+}
 
 /**
 登录，并查出用户所有菜单及按钮权限
