@@ -12,26 +12,6 @@
 <script type="text/javascript" src="/static/js/date_formart.js"></script>
 <!-- js引入 end -->
 <script type="text/javascript">
-    var grid;
-    var initTable = function () {
-        grid = $('#sample_1').DataTable({
-            "processing": false,
-            "serverSide": true,
-            "ajax": {
-                "url": '{{urlfor "AdminController.List"}}',
-                "type": "POST"
-            },
-            "columns": [
-                {"data": "name"},
-                {"data": "position"},
-                {"data": "office"},
-                {"data": "extn"},
-                {"data": "start_date"},
-                {"data": "salary"}
-            ]
-        })
-        ;
-    }
 
     function init2() {
         $('#example2').DataTable({
