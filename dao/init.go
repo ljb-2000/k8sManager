@@ -15,7 +15,7 @@ func init() {
 		logs.Error("Fail to create xorm system logger: %v\n", err)
 	}
 	logs.Info(Db)
-	Db.LogMode(false)
+	Db.LogMode(true)
 	Db.DB().SetMaxIdleConns(10)
 	Db.DB().SetMaxOpenConns(100)
 

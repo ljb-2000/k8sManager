@@ -15,6 +15,12 @@ func (this *LoginController)Tologin() {
 	this.TplName = "login.html"
 }
 
+func (this *LoginController)Logout() {
+	this.DelSession(common.SESSION_LOGIN_USER)
+	this.Redirect(beego.URLFor("LoginController.Tologin"), 302)
+	return
+}
+
 func (this *LoginController)Login() {
 	var loginName, password string;
 	loginName = this.GetString("LoginName")

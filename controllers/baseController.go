@@ -4,6 +4,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
 	"strings"
+	"github.com/tonychenl/k8sManager/models"
 	"github.com/tonychenl/k8sManager/common"
 )
 
@@ -30,17 +31,32 @@ func (this *BaseController) Prepare() {
 		logs.Info("不需要验证登录 path :", path)
 		return //不需要验证登录
 	}
+
+
 	//登录校验
 	logs.Debug("登录校验 path :", path)
-	var user interface{}
-	user = this.GetSession(common.SESSION_LOGIN_USER)
-	if user == nil {
+	if this.GetSession(common.SESSION_LOGIN_USER) == nil {
 		//未登录
 		this.Redirect(beego.URLFor("LoginController.Tologin"), 302)
+		return
 	}
+	
+	admin := this.GetSession(common.SESSION_LOGIN_USER).(*models.Admin)
+	this.Data["admin"] = admin
 
 	//操作权限校验
 	logs.Debug("操作权限校验 path :", path)
+	if strings.EqualFold(path, "MainController.Index") {
+		return
+	}
+	if admin.HasMenu(path) {
+		return
+	} else {
+		//没有权限
+		logs.Debug("=================")
+		this.Abort("403")
+		return
+	}
 }
 
 
