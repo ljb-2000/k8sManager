@@ -16,7 +16,12 @@ type Admin struct {
 }
 
 func (a *Admin)HasMenu(menu string) bool {
-	return a.Role.HasMenu(menu)
+	if a.Role.HasMenu(menu) {
+		logs.Debug("菜单权限验证通过:%s", menu)
+		return true
+	}
+	logs.Debug("权限验证失败:%s", menu)
+	return false
 }
 
 func (Admin)TableName() string {
@@ -33,11 +38,12 @@ func (a *Role)HasMenu(menu string) bool {
 	if a.Menus == nil {
 		return false
 	}
-	var hasMenu = false
 	for _, m := range a.Menus {
-		hasMenu = m.hasMenu(menu)
+		if m.hasMenu(menu) {
+			return true
+		}
 	}
-	return hasMenu
+	return false
 }
 
 func (Role)TableName() string {
@@ -57,16 +63,15 @@ type Menu struct {
 }
 
 func (this *Menu)hasMenu(menu string) bool {
-	logs.Debug("菜单权限验证" + this.Handler + ":" + menu)
 	if strings.EqualFold(this.Handler, menu) {
-		logs.Debug("菜单权限验证通过" + this.Handler + ":" + menu)
 		return true
 	}
-	var hasMenu = false
 	for _, m := range this.Menus {
-		hasMenu = m.hasMenu(menu)
+		if m.hasMenu(menu) {
+			return true
+		}
 	}
-	return hasMenu
+	return false
 }
 
 func (Menu)TableName() string {
