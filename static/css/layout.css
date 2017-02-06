@@ -1,0 +1,4 @@
+/*table表头不换行*/
+table.dataTable thead > tr > th {
+    white-space:nowrap;
+}
