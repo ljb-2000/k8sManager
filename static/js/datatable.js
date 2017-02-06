@@ -63,29 +63,25 @@ var Datatable = function() {
                             data['limit']=data.length;
                             var  page = (data.start/data.length)>=1?(data.start/data.length)+1:1;
                             data['page']=page;
-                            /*Metronic.blockUI({
+                            blockUI({
                                 message: tableOptions.loadingMessage,
                                 target: tableContainer,
-                                overlayColor: 'none',
-                                cenrerY: true,
-                                boxed: true
-                             });*/
+                             });
                         },
                         "dataSrc": function(res) { // Manipulate the data returned from the server
                     		if(!res.List || !res){
                         		showToast('载入数据出错','', 'error');
-                                //Metronic.unblockUI(tableContainer);
+                                unblockUI(tableContainer);
                         		return [];
                         	}
                             if ($('.group-checkable', table).size() === 1) {
                                 $('.group-checkable', table).prop("checked", false);
-                                //$.uniform.update($('.group-checkable', table));
                             }
 
                             if (tableOptions.onSuccess) {
                                 tableOptions.onSuccess.call(undefined, the);
                             }
-                            //Metronic.unblockUI(tableContainer);
+                            unblockUI(tableContainer);
 
                             res.recordsTotal = res.TotalCount;
                             res.recordsFiltered = res.TotalCount;
@@ -102,7 +98,7 @@ var Datatable = function() {
                         	}else{
                         		dataTable.ajax.url(ajaxUrl);
                         	}
-                            //Metronic.unblockUI(tableContainer);
+                            unblockUI(tableContainer);
                         }
                     },
 
@@ -122,19 +118,17 @@ var Datatable = function() {
             }, options);
 
             tableOptions = options;
-       
+
+            tableContainer = $(".wrapper > .content-wrapper > .content");//table.parents(".table-container");
+
+            // initialize a datatable
+            // create table's jquery object
             if(tableOptions.lazyload){
-            	ajaxUrl = options.dataTable.ajax.url;
+                ajaxUrl = options.dataTable.ajax.url;
                 options.dataTable.ajax.url='';
             }
 
-            // create table's jquery object
             table = $(options.src);
-            tableContainer = $(".wrapper > .content-wrapper > .content");//table.parents(".table-container");
-
-            // apply the special class that used to restyle the default datatable
-
-            // initialize a datatable
             dataTable = table.DataTable(options.dataTable);
 
             // handle group checkboxes check/uncheck
