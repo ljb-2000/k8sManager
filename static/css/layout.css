@@ -1,4 +1,9 @@
 /*table表头不换行*/
 table.dataTable thead > tr > th {
+    padding-right: 8px!important;
     white-space:nowrap;
+}
+
+table.dataTable  tr > .tb_checkbox {
+    text-align: center!important;
 }

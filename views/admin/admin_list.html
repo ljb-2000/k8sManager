@@ -9,71 +9,48 @@
 <!-- js引入 begin -->
 <script type="text/javascript" src="/static/plugins/datatables/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/static/plugins/datatables/dataTables.bootstrap.js"></script>
+<script type="text/javascript" src="/static/js/datatable.js"></script>
 <script type="text/javascript" src="/static/js/date_formart.js"></script>
 <!-- js引入 end -->
 <script type="text/javascript">
-
-    function init2() {
-        $('#example2').DataTable({
-            "pageLength": 15, // default records per page
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": false,
-            "info": true,
-            "autoWidth": false,
-            "stateSave": false,
-            "language": { // language settings
-                // data tables spesific
-                "info": "共 _TOTAL_ 条记录",
-                "infoEmpty": "共 0 条记录",
-                "sEmptyTable": "没有可用的数据",
-                "paginate": {
-                    "previous": "上一页",
-                    "next": "下一页",
-                    "last": "尾页",
-                    "first": "首页"
-                }
+    var grid;
+    function initTable() {
+        grid = new Datatable();
+        grid.init({
+            src: $("#example2"),
+            //searchEle:"#search_param",
+            onSuccess: function (grid) {
+                // execute some code after table records loaded
             },
-            "ajax": { // define ajax settings
-                "url": '{{urlfor "AdminController.List"}}',
-                "type": "POST", // request type
-                "timeout": 20000,
-                "dataSrc": function (res) { // Manipulate the data returned from the server
-                    if (!res.List || !res) {
-                        //showToast('载入数据出错', '', 'error');
-                        //Metronic.unblockUI(tableContainer);
-                        return [];
-                    }
-
-                    //Metronic.unblockUI(tableContainer);
-
-                    res.recordsTotal = res.TotalCount;
-                    res.recordsFiltered = res.TotalCount;
-                    res.length = res.PageSize;
-
-                    return res.List;
+            onError: function (grid) {
+                // execute some code on network or other general error
+            },
+            dataTable: {
+                ajax: {
+                    url: '{{urlfor "AdminController.List"}}',
                 },
-            },
-            "columns": [
-                {"data": "Name"},
-                {"data": "LoginName"},
-                {"data": "Role.Name"},
-                {"data": function (data) {
-                    return data.Enable?'启用':'停用';
-                }},
-                {
-                    "data": function (data) {
-                        return '';
+                "columns": [
+                    {"data":function (data) {
+                        return '<input type="checkbox"  class="checkchild"  value="' + data.Id + '" />';
+                    },"className":"tb_checkbox"},
+                    {"data": "Name"},
+                    {"data": "LoginName"},
+                    {"data": "Role.Name"},
+                    {"data": function (data) {
+                        return data.Enable?'启用':'停用';
+                    }},
+                    {
+                        "data": function (data) {
+                            return '';
+                        }
                     }
-                }
-            ]
+                ]
+            }
         });
     }
 
     $(function () {
-        //initTable();
-        init2();
+        initTable();
     });
 </script>
 {{end}}
@@ -89,6 +66,9 @@
                 <table id="example2" class="table table-bordered table-hover">
                     <thead>
                     <tr>
+                        <th width="25px" class="tb_checkbox">
+                            <input type="checkbox" class="group-checkable" />
+                        </th>
                         <th>姓名</th>
                         <th>登陆账号</th>
                         <th>角色</th>

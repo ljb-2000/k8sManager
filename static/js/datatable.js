@@ -7,22 +7,10 @@ var Datatable = function() {
     var dataTable; // datatable object
     var table; // actual table jquery object
     var tableContainer; // actual table container object
-    var tableWrapper; // actual table wrapper jquery object
-    var el = $(".wrapper > .content-wrapper > .content");
     var tableInitialized = false;
     var ajaxParams = {}; // set filter mode
     var the;
     var ajaxUrl;
-
-    var countSelectedRecords = function() {
-        var selected = $('tbody > tr > td:nth-child(1) input[type="checkbox"]:checked', table).size();
-        var text = tableOptions.dataTable.language.metronicGroupActions;
-        if (selected > 0) {
-            //$('.table-group-actions > span', tableWrapper).text(text.replace("_TOTAL_", selected));
-        } else {
-            //$('.table-group-actions > span', tableWrapper).text("");
-        }
-    };
 
     return {
 
@@ -42,14 +30,15 @@ var Datatable = function() {
                 searchEle:"",
                 lazyload:false,
                 dataTable: {
-                    "pageLength": 13, // default records per page
+                    "paging": true,
+                    "pageLength": 15, // default records per page
                     "searching": false,
-		            "ordering":  false,
-		            "stateSave": false,
-		            "info": true,
-		            "lengthChange":false,
+                    "ordering":  false,
+                    "stateSave": false,
+                    "info": true,
+                    "lengthChange":false,
+                    "autoWidth": false,
                     "language": { // language settings
-                        // data tables spesific
                     	"info": "共 _TOTAL_ 条记录",
                     	"infoEmpty":"共 0 条记录",
                     	"sEmptyTable":"没有可用的数据",
@@ -62,7 +51,6 @@ var Datatable = function() {
                     },
                     "processing": false, // enable/disable display message box on record load
                     "serverSide": true, // enable/disable server side ajax loading
-
                     "ajax": { // define ajax settings
                         "url": "", // ajax URL
                         "type": "POST", // request type
@@ -84,14 +72,14 @@ var Datatable = function() {
                              });*/
                         },
                         "dataSrc": function(res) { // Manipulate the data returned from the server
-                    		if(!res.items || !res){
+                    		if(!res.List || !res){
                         		showToast('载入数据出错','', 'error');
                                 //Metronic.unblockUI(tableContainer);
                         		return [];
-                        	}                        	
+                        	}
                             if ($('.group-checkable', table).size() === 1) {
-                                $('.group-checkable', table).attr("checked", false);
-                                $.uniform.update($('.group-checkable', table));
+                                $('.group-checkable', table).prop("checked", false);
+                                //$.uniform.update($('.group-checkable', table));
                             }
 
                             if (tableOptions.onSuccess) {
@@ -99,11 +87,11 @@ var Datatable = function() {
                             }
                             //Metronic.unblockUI(tableContainer);
 
-                           res.recordsTotal=res.totalCount;
-                           res.recordsFiltered=res.totalCount;
-                           res.length=res.limit;
-                            
-                            return res.items;
+                            res.recordsTotal = res.TotalCount;
+                            res.recordsFiltered = res.TotalCount;
+                            res.length = res.PageSize;
+
+                            return res.List;
                         },
                         "error": function(xhr,status,e) { // handle general connection errors
                         	if(options.dataTable.ajax.url!=''){
@@ -124,7 +112,6 @@ var Datatable = function() {
                             table.show(); // display table
                         }
                         // Metronic.initUniform($('input[type="checkbox"]', table)); // reinitialize uniform checkboxes on each table reload
-                        countSelectedRecords(); // reset selected records indicator
 
                         // callback for ajax data load
                         if (tableOptions.onDataLoad) {
@@ -146,42 +133,21 @@ var Datatable = function() {
             tableContainer = $(".wrapper > .content-wrapper > .content");//table.parents(".table-container");
 
             // apply the special class that used to restyle the default datatable
-            var tmp = $.fn.dataTableExt.oStdClasses;
-
-            $.fn.dataTableExt.oStdClasses.sWrapper = $.fn.dataTableExt.oStdClasses.sWrapper + " dataTables_extended_wrapper";
-            $.fn.dataTableExt.oStdClasses.sFilterInput = "form-control input-small input-sm input-inline";
-            $.fn.dataTableExt.oStdClasses.sLengthSelect = "form-control input-xsmall input-sm input-inline";
 
             // initialize a datatable
             dataTable = table.DataTable(options.dataTable);
 
-            // revert back to default
-            $.fn.dataTableExt.oStdClasses.sWrapper = tmp.sWrapper;
-            $.fn.dataTableExt.oStdClasses.sFilterInput = tmp.sFilterInput;
-            $.fn.dataTableExt.oStdClasses.sLengthSelect = tmp.sLengthSelect;
-
-            // get table wrapper
-            tableWrapper = table.parents('.dataTables_wrapper');
-
-            // build table group actions panel
-            if ($('.table-actions-wrapper', tableContainer).size() === 1) {
-                $('.table-group-actions', tableWrapper).html($('.table-actions-wrapper', tableContainer).html()); // place the panel inside the wrapper
-                $('.table-actions-wrapper', tableContainer).remove(); // remove the template container
-            }
             // handle group checkboxes check/uncheck
             $('.group-checkable', table).change(function() {
                 var set = $('tbody > tr > td:nth-child(1) input[type="checkbox"][disabled!="disabled"]', table);
                 var checked = $(this).is(":checked");
                 $(set).each(function() {
-                    $(this).attr("checked", checked);
+                    $(this).prop("checked", checked);
                 });
-                $.uniform.update(set);
-                countSelectedRecords();
             });
 
             // handle row's checkbox click
             table.on('change', 'tbody > tr > td:nth-child(1) input[type="checkbox"]', function() {
-                countSelectedRecords();
             });
 
             //搜索按钮
@@ -287,7 +253,7 @@ var Datatable = function() {
                 ajaxParams[name] = [];
             }
 
-            skip = false;
+            var skip = false;
             for (var i = 0; i < (ajaxParams[name]).length; i++) { // check for duplicates
                 if (ajaxParams[name][i] === value) {
                     skip = true;
@@ -305,10 +271,6 @@ var Datatable = function() {
 
         getDataTable: function() {
             return dataTable;
-        },
-
-        getTableWrapper: function() {
-            return tableWrapper;
         },
 
         gettableContainer: function() {
