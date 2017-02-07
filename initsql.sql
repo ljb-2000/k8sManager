@@ -17,7 +17,7 @@ CREATE TABLE sys_role
 -- ----------------------------
 -- 初始化系统角色
 -- ----------------------------
-INSERT INTO `sys_role` (`id`, `name`, `enname`, `is_sys`, `useable`, `create_time`, `update_time`, `delete_time`) VALUES (1, '系统管理员', 'admin', '1', '1', '2016-7-10 07:08:14', '2016-7-10 07:08:18', '2016-7-10 07:08:18');
+INSERT INTO `sys_role` (`id`, `name`, `enname`, `is_sys`, `useable`, `create_time`, `update_time`, `delete_time`) VALUES (1, '系统管理员', 'admin', '1', '1', '2016-7-10 07:08:14', '2016-7-10 07:08:18', null);
 
 
 DROP TABLE IF EXISTS `sys_admin`;

@@ -1,0 +1,65 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"path": "appengine/cloudsql",
+			"revision": ""
+		},
+		{
+			"checksumSHA1": "e9u5CletpzwhAOhU8rXoLopFTX8=",
+			"path": "github.com/astaxie/beego",
+			"revision": "b55e20ac60c5c2f4ec9612ec68a48cb94cfaab42",
+			"revisionTime": "2017-01-23T13:12:58Z"
+		},
+		{
+			"checksumSHA1": "kjytFi3nPY+nCfokcTtxP8nCL48=",
+			"path": "github.com/astaxie/beego/config",
+			"revision": "b55e20ac60c5c2f4ec9612ec68a48cb94cfaab42",
+			"revisionTime": "2017-01-23T13:12:58Z"
+		},
+		{
+			"checksumSHA1": "swT6CGf6GtG3dRFrosdKU0L0oj0=",
+			"path": "github.com/astaxie/beego/context",
+			"revision": "b55e20ac60c5c2f4ec9612ec68a48cb94cfaab42",
+			"revisionTime": "2017-01-23T13:12:58Z"
+		},
+		{
+			"checksumSHA1": "s6ssmbMKnIbOCsboRkPNm+20xCI=",
+			"path": "github.com/astaxie/beego/toolbox",
+			"revision": "b55e20ac60c5c2f4ec9612ec68a48cb94cfaab42",
+			"revisionTime": "2017-01-23T13:12:58Z"
+		},
+		{
+			"checksumSHA1": "Zc7cli1PFfbrd0hcUR7JtFW9A78=",
+			"path": "github.com/astaxie/beego/utils",
+			"revision": "b55e20ac60c5c2f4ec9612ec68a48cb94cfaab42",
+			"revisionTime": "2017-01-23T13:12:58Z"
+		},
+		{
+			"checksumSHA1": "blZyJ896pCiBGuD5YJU5XXG95Ps=",
+			"path": "github.com/go-sql-driver/mysql",
+			"revision": "2e00b5cd70399450106cec6431c2e2ce3cae5034",
+			"revisionTime": "2016-12-24T12:10:19Z"
+		},
+		{
+			"checksumSHA1": "vcF7C8+6v9sckxQgfToHPZ89ShY=",
+			"path": "github.com/jinzhu/gorm",
+			"revision": "c730b30a7830a04a4a3d536edcb1f8c5f77d3482",
+			"revisionTime": "2017-02-07T00:32:18Z"
+		},
+		{
+			"checksumSHA1": "w5/naAzcG0+g6aYx63/of1Wbgqw=",
+			"path": "github.com/jinzhu/gorm/dialects/mysql",
+			"revision": "c730b30a7830a04a4a3d536edcb1f8c5f77d3482",
+			"revisionTime": "2017-02-07T00:32:18Z"
+		},
+		{
+			"checksumSHA1": "tUQ1pHvWxAcPFmveZtlmCR9H4TY=",
+			"path": "github.com/jinzhu/inflection",
+			"revision": "1c35d901db3da928c72a72d8458480cc9ade058f",
+			"revisionTime": "2017-01-02T12:52:26Z"
+		}
+	],
+	"rootPath": "github.com/tonychenl/k8sManager"
+}
