@@ -1,11 +1,7 @@
-{{define "layout_css"}}
 <!-- 样式引入  begin -->
-<link rel="stylesheet" type="text/css"
-      href="/static/plugins/datatables/dataTables.bootstrap.css"/>
+<link rel="stylesheet" type="text/css"  href="/static/plugins/datatables/dataTables.bootstrap.css"/>
 <!-- 样式引入  end -->
-{{end}}
 
-{{define "layout_js"}}
 <!-- js引入 begin -->
 <script type="text/javascript" src="/static/plugins/datatables/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/static/plugins/datatables/dataTables.bootstrap.js"></script>
@@ -53,9 +49,7 @@
         initTable();
     });
 </script>
-{{end}}
 
-{{define "layout_content"}}
 
 <!-- 页面主体 begin -->
 <div class="row">
@@ -93,7 +87,3 @@
         </div>
     </div>
 </div>
-
-{{end}}
-
-{{template "/layout/layout.html" .}}

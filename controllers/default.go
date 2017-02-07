@@ -8,5 +8,5 @@ type MainController struct {
 }
 
 func (c *MainController) Index() {
-	c.TplName = "index.html"
+	c.TplName = "layout/layout.html"
 }

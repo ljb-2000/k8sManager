@@ -144,86 +144,10 @@ $(function () {
 
   //Fix for IE page transitions
   $("body").removeClass("hold-transition");
-
-  //Extend options if external options exist
-  if (typeof AdminLTEOptions !== "undefined") {
-    $.extend(true,
-      $.AdminLTE.options,
-      AdminLTEOptions);
-  }
-
-  //Easy access to options
-  var o = $.AdminLTE.options;
-
   //Set up the object
   _init();
-
-  //Activate the layout maker
-  $.AdminLTE.layout.activate();
-
-  //Enable sidebar tree view controls
-  if (o.enableControlTreeView) {
-    $.AdminLTE.tree('.sidebar');
-  }
-
-  //Enable control sidebar
-  if (o.enableControlSidebar) {
-    $.AdminLTE.controlSidebar.activate();
-  }
-
-  //Add slimscroll to navbar dropdown
-  if (o.navbarMenuSlimscroll && typeof $.fn.slimscroll != 'undefined') {
-    $(".navbar .menu").slimscroll({
-      height: o.navbarMenuHeight,
-      alwaysVisible: false,
-      size: o.navbarMenuSlimscrollWidth
-    }).css("width", "100%");
-  }
-
-  //Activate sidebar push menu
-  if (o.sidebarPushMenu) {
-    $.AdminLTE.pushMenu.activate(o.sidebarToggleSelector);
-  }
-
-  //Activate Bootstrap tooltip
-  if (o.enableBSToppltip) {
-    $('body').tooltip({
-      selector: o.BSTooltipSelector,
-      container: 'body'
-    });
-  }
-
-  //Activate box widget
-  if (o.enableBoxWidget) {
-    $.AdminLTE.boxWidget.activate();
-  }
-
-  //Activate fast click
-  if (o.enableFastclick && typeof FastClick != 'undefined') {
-    FastClick.attach(document.body);
-  }
-
-  //Activate direct chat widget
-  if (o.directChat.enable) {
-    $(document).on('click', o.directChat.contactToggleSelector, function () {
-      var box = $(this).parents('.direct-chat').first();
-      box.toggleClass('direct-chat-contacts-open');
-    });
-  }
-
-  /*
-   * INITIALIZE BUTTON TOGGLE
-   * ------------------------
-   */
-  $('.btn-group[data-toggle="btn-toggle"]').each(function () {
-    var group = $(this);
-    $(this).find(".btn").on('click', function (e) {
-      group.find(".btn.active").removeClass("active");
-      $(this).addClass("active");
-      e.preventDefault();
-    });
-
-  });
+  $.AdminLTE.handleMenu();
+  $.AdminLTE.reLayout();
 });
 
 /* ----------------------------------
@@ -599,6 +523,151 @@ function _init() {
       var box = element.parents(".box").first();
       box.slideUp(this.animationSpeed);
     }
+  };
+
+  // wrMetronicer function to scroll(focus) to an element
+  $.AdminLTE.scrollTo = function(el, offeset) {
+    var pos = (el && el.size() > 0) ? el.offset().top : 0;
+
+    if (el) {
+      pos = pos - $('.main-header').height();
+      pos = pos + (offeset ? offeset : -1 * el.height());
+    }
+
+    $('html,body').animate({
+      scrollTop: pos
+    }, 'slow');
+  };
+
+  $.AdminLTE.scrollTop = function() {
+    $.AdminLTE.scrollTo();
+  };
+
+  $.AdminLTE.reLayout = function () {
+
+    //Extend options if external options exist
+    if (typeof AdminLTEOptions !== "undefined") {
+      $.extend(true,
+          $.AdminLTE.options,
+          AdminLTEOptions);
+    }
+
+    //Easy access to options
+    var o = $.AdminLTE.options;
+
+    //Activate the layout maker
+    $.AdminLTE.layout.activate();
+
+    //Enable sidebar tree view controls
+    if (o.enableControlTreeView) {
+      $.AdminLTE.tree('.sidebar');
+    }
+
+    //Enable control sidebar
+    if (o.enableControlSidebar) {
+      $.AdminLTE.controlSidebar.activate();
+    }
+
+    //Add slimscroll to navbar dropdown
+    if (o.navbarMenuSlimscroll && typeof $.fn.slimscroll != 'undefined') {
+      $(".navbar .menu").slimscroll({
+        height: o.navbarMenuHeight,
+        alwaysVisible: false,
+        size: o.navbarMenuSlimscrollWidth
+      }).css("width", "100%");
+    }
+
+    //Activate sidebar push menu
+    if (o.sidebarPushMenu) {
+      $.AdminLTE.pushMenu.activate(o.sidebarToggleSelector);
+    }
+
+    //Activate Bootstrap tooltip
+    if (o.enableBSToppltip) {
+      $('body').tooltip({
+        selector: o.BSTooltipSelector,
+        container: 'body'
+      });
+    }
+
+    //Activate box widget
+    if (o.enableBoxWidget) {
+      $.AdminLTE.boxWidget.activate();
+    }
+
+    //Activate fast click
+    if (o.enableFastclick && typeof FastClick != 'undefined') {
+      FastClick.attach(document.body);
+    }
+
+    //Activate direct chat widget
+    if (o.directChat.enable) {
+      $(document).on('click', o.directChat.contactToggleSelector, function () {
+        var box = $(this).parents('.direct-chat').first();
+        box.toggleClass('direct-chat-contacts-open');
+      });
+    }
+
+    /*
+     * INITIALIZE BUTTON TOGGLE
+     * ------------------------
+     */
+    $('.btn-group[data-toggle="btn-toggle"]').each(function () {
+      var group = $(this);
+      $(this).find(".btn").on('click', function (e) {
+        group.find(".btn.active").removeClass("active");
+        $(this).addClass("active");
+        e.preventDefault();
+      });
+
+    });
+  };
+
+  $.AdminLTE.handleMenu = function () {
+      $('.main-sidebar').on('click', 'li > a', function (e) {
+        var menu = $(".main-sidebar");
+        // 删除已经激活的菜单样式
+        menu.find('li.active').removeClass('active');
+        var href = $(this).attr("href");
+        if(href == '/'){
+            return;
+        }
+        if(href != '#'){
+          $(this).parents("li.treeview").addClass('active');
+          $(this).parent("li").addClass('active');
+          $.AdminLTE.loadPage(href);
+          e.preventDefault();
+        }
+      });
+  };
+
+  $.AdminLTE.loadPage = function (url) {
+    $.AdminLTE.scrollTop();
+    var pageContentBody = $('.content-wrapper .content');
+    blockUI({
+      target: pageContentBody,
+    });
+    $.ajaxSetup({
+      global: false,
+      cache:true,
+    });
+
+    $.ajax({
+      url: url,
+      dataType: "html",
+      type: "GET",
+      headers:{"X-Requested-With":"Agent"},
+      success: function (res) {
+        //Metronic.stopPageLoading();
+        unblockUI(pageContentBody);
+        pageContentBody.html(res);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        pageContentBody.html('<h4>亲，您的服务器开了个小差！</h4>');
+        unblockUI(pageContentBody);
+        console.log(xhr)
+      }
+    });
   };
 }
 

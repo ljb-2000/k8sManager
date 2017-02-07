@@ -82,6 +82,9 @@ ALTER TABLE sys_role_menu
 	ON DELETE RESTRICT
 ;
 
+-- 表盘
+INSERT INTO `sys_menu` (`id`, `parent_id`, `parent_ids`, `name`, `sort`, `handler`, `icon`, `is_show`) VALUES (1000000, NULL, '', '表盘', 1, 'DashboardController.Index', 'fa fa-dashboard', 1);
+
 -- 系统管理  ----------start
 INSERT INTO `sys_menu` (`id`, `parent_id`, `parent_ids`, `name`, `sort`, `handler`, `icon`, `is_show`) VALUES (1010000, NULL, '', '用户管理', 99, '', 'fa fa-user', 1);
 
@@ -101,6 +104,8 @@ INSERT INTO `sys_menu` (`id`, `parent_id`, `parent_ids`, `name`, `sort`, `handle
 -- ----------------------------
 -- 菜单角色关联表
 -- ----------------------------
+--表盘
+INSERT INTO `sys_role_menu` (`role_id`, `menu_id`) VALUES (1, 1000000);
 -- 系统管理 ---------------------start
 INSERT INTO `sys_role_menu` (`role_id`, `menu_id`) VALUES (1, 1010000);
 -- 角色管理

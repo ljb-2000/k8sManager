@@ -22,7 +22,6 @@
 
     <link rel="stylesheet" href="/static/css/layout.css">
     <link rel="stylesheet" href="/static/plugins/bootstrap-toastr/toastr.min.css">
-    {{template "layout_css" .}}
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -111,19 +110,23 @@
             <ul class="sidebar-menu">
                 <li class="header"></li>
                 {{range .admin.Role.Menus}}
-                <li class="active treeview">
-                    <a href="#">
-                        <i class="{{.Icon}}"></i> <span>{{.Name}}</span>
-                        <span class="pull-right-container">
-                              <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        {{range .Menus}}
+                    {{if .Menus}}
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="{{.Icon}}"></i> <span>{{.Name}}</span>
+                            <span class="pull-right-container">
+                                  <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            {{range .Menus}}
+                            <li><a href="{{urlfor .Handler}}"><i class="{{.Icon}}"></i> {{.Name}}</a></li>
+                            {{end}}
+                        </ul>
+                    </li>
+                    {{else}}
                         <li><a href="{{urlfor .Handler}}"><i class="{{.Icon}}"></i> {{.Name}}</a></li>
-                        {{end}}
-                    </ul>
-                </li>
+                    {{end}}
                 {{end}}
 
             </ul>
@@ -136,7 +139,6 @@
 
         <!-- Main content -->
         <section class="content">
-            {{template "layout_content" .}}
         </section>
         <!-- /.content -->
     </div>
@@ -162,11 +164,14 @@
 <script src="/static/plugins/bootstrap-toastr/toastr.min.js"></script>
 <script src="/static/plugins/jquery.blockui.min.js"></script>
 <!-- AdminLTE App -->
-<script src="/static/js/app.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="/static/js/k8smanager.js"></script>
+<script src="/static/js/app.js"></script>
 <script src="/static/js/common.js"></script>
 <script src="/static/js/jQuery.my-ajax.js"></script>
-{{template "layout_js" .}}
+
+<script type="application/javascript">
+    $(function () {
+        $('.main-sidebar li > a:first-child')[0].click();
+    })
+</script>
 </body>
 </html>

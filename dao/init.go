@@ -4,6 +4,8 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/astaxie/beego/logs"
+	"github.com/astaxie/beego"
+	"strings"
 )
 
 var db *gorm.DB
@@ -15,7 +17,9 @@ func init() {
 		logs.Error("Fail to create xorm system logger: %v\n", err)
 	}
 	logs.Info(Db)
-	Db.LogMode(true)
+	if strings.EqualFold("dev",beego.AppConfig.String("runmode")) {
+		Db.LogMode(true)
+	}
 	Db.DB().SetMaxIdleConns(10)
 	Db.DB().SetMaxOpenConns(100)
 
