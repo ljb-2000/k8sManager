@@ -644,8 +644,9 @@ function _init() {
   $.AdminLTE.loadPage = function (url) {
     $.AdminLTE.scrollTop();
     var pageContentBody = $('.content-wrapper .content');
+    var pageContentWrapper = $('.content-wrapper');
     blockUI({
-      target: pageContentBody,
+      target: pageContentWrapper,
     });
     $.ajaxSetup({
       global: false,
@@ -659,12 +660,12 @@ function _init() {
       headers:{"X-Requested-With":"Agent"},
       success: function (res) {
         //Metronic.stopPageLoading();
-        unblockUI(pageContentBody);
+        unblockUI(pageContentWrapper);
         pageContentBody.html(res);
       },
       error: function (xhr, ajaxOptions, thrownError) {
         pageContentBody.html('<h4>亲，您的服务器开了个小差！</h4>');
-        unblockUI(pageContentBody);
+        unblockUI(pageContentWrapper);
         console.log(xhr)
       }
     });
